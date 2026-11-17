@@ -1,0 +1,8 @@
+config/koneksi.php
+.env
+uploads/
+assets/uploads/
+node_modules/
+auth*/
+*.log
+.DS_Store

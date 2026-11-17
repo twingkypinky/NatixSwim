@@ -1,0 +1,14 @@
+{
+  "name": "natix-wa-gateway",
+  "version": "1.0.0",
+  "description": "Gateway WhatsApp (Baileys) untuk Natix Swim: menerima pesan -> webhook PHP, mengirim pesan dari PHP",
+  "type": "module",
+  "main": "wa-gateway.mjs",
+  "scripts": { "start": "node wa-gateway.mjs" },
+  "engines": { "node": ">=20" },
+  "dependencies": {
+    "@whiskeysockets/baileys": "latest",
+    "pino": "^9.0.0",
+    "qrcode": "^1.5.4"
+  }
+}

@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>Dashboard — Natix Swim</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="css/reset.css" />
+	<link rel="stylesheet" href="css/dashboard.css" />
+</head>
+
+<body>
+	<!-- ===== SIDEBAR ===== -->
+	<aside class="sidebar">
+		<a href="dashboard-admin.html" class="brand">
+			<img src="assets/brand/navbar-logo.png" alt="Natix Swim" class="brand-logo">
+			<span>Natix Swim</span>
+		</a>
+
+		<nav class="nav">
+			<a href="dashboard-admin.html" class="nav-item"><img src="assets/nav/nav-group.svg" alt="" class="nav-icon">Dashboard</a>
+
+			<p class="nav-label">CUSTOMER DATA</p>
+			<a href="cdm-data-member.html" class="nav-item"><img src="assets/nav/nav-group.svg" alt="" class="nav-icon">Data Member</a>
+			<a href="cdm-segmentasi.html" class="nav-item"><img src="assets/nav/nav-group2.svg" alt="" class="nav-icon">Segmentasi</a>
+
+			<p class="nav-label">OPERASIONAL</p>
+			<a href="manajemen-kelas.html" class="nav-item"><img src="assets/nav/nav-group3.svg" alt="" class="nav-icon">Kelas &amp; Program</a>
+			<a href="jadwal-kelas.html" class="nav-item"><img src="assets/nav/nav-group4.svg" alt="" class="nav-icon">Jadwal Kelas</a>
+			<a href="data-pelatih-jadwal.html" class="nav-item"><img src="assets/nav/nav-group.svg" alt="" class="nav-icon">Data Pelatih</a>
+			<a href="kehadiran.html" class="nav-item"><img src="assets/nav/nav-group5.svg" alt="" class="nav-icon">Kehadiran</a>
+
+			<p class="nav-label">ADMINISTRASI</p>
+			<a href="administrasi.html" class="nav-item"><span class="nav-icon icon-card"></span>Transaksi</a>
+			<a href="administrasi-laporan.html" class="nav-item"><img src="assets/background/navbar-component.svg" alt="" class="nav-icon">Laporan Keuangan</a>
+
+			<p class="nav-label">AI ASSISTANT</p>
+			<a href="manajemen-ai-chat.html" class="nav-item"><img src="assets/nav/navbar-group.svg" alt="" class="nav-icon">Chat Log<span class="nav-badge">12</span></a>
+			<a href="manajemen-ai1.html" class="nav-item"><img src="assets/nav/nav-group6.svg" alt="" class="nav-icon">Knowledge Base</a>
+			<a href="manajemen-ai2.html" class="nav-item"><img src="assets/nav/nav-group7.svg" alt="" class="nav-icon">Otomasi Pesan</a>
+			<a href="manajemen-ai-analitik.html" class="nav-item"><img src="assets/nav/nav-group8.svg" alt="" class="nav-icon">Analitik AI</a>
+
+			<p class="nav-label">SISTEM</p>
+			<a href="pengaturan-pengaturan.html" class="nav-item"><img src="assets/nav/nav-group9.svg" alt="" class="nav-icon">Pengaturan</a>
+		</nav>
+
+		<div class="profile">
+			<div class="person">
+				<span class="avatar avatar-dark">AD</span>
+				<div>
+					<strong>Admin Natix</strong>
+					<p class="muted">Owner</p>
+				</div>
+			</div>
+			<a href="login.html" class="btn-logout">↪ Logout</a>
+		</div>
+	</aside>
+
+	<!-- ===== MAIN ===== -->
+	<main class="main">
+		<header class="topbar">
+			<label class="search">
+				<img src="assets/dashboard-admin/btn-search-r-icon.svg" alt="">
+				<input type="text" placeholder="Cari member, kelas, pelatih...">
+			</label>
+
+			<div class="topbar-actions">
+				<button class="icon-btn"><img src="assets/dashboard-admin/main-group1.svg" alt="Notifikasi"></button>
+				<button class="icon-btn"><img src="assets/dashboard-admin/main-group2.svg" alt="Pesan"></button>
+				<span class="avatar avatar-dark">AD</span>
+			</div>
+		</header>
+
+		<div class="content">
+			<div>
+				<h1 class="page-title">Dashboard</h1>
+				<p class="muted">Minggu, 11 Oktober 2026 · Selamat datang kembali, Admin</p>
+			</div>
+
+			<!-- STAT CARDS -->
+			<section class="stats">
+				<article class="card stat">
+					<div class="stat-top">
+						<p class="stat-label">Total Member</p>
+						<span class="stat-icon"><img src="assets/dashboard-admin/card-c-f-ico-r/card-c-f-group1.svg" alt=""></span>
+					</div>
+					<div class="stat-value">
+						<h2>412</h2>
+						<span class="pill pill-green">+8,2%</span>
+					</div>
+					<p class="stat-note">vs. bulan lalu (381)</p>
+				</article>
+
+				<article class="card stat">
+					<div class="stat-top">
+						<p class="stat-label">Member Aktif</p>
+						<span class="stat-icon"><img src="assets/dashboard-admin/card-c-f-ico-r/card-c-f-group2.svg" alt=""></span>
+					</div>
+					<div class="stat-value">
+						<h2>306</h2>
+						<span class="pill pill-green">+5,1%</span>
+					</div>
+					<p class="stat-note">74% dari total member</p>
+				</article>
+
+				<article class="card stat">
+					<div class="stat-top">
+						<p class="stat-label">Total Kelas Hari Ini</p>
+						<span class="stat-icon"><img src="assets/dashboard-admin/card-c-f-group.svg" alt=""></span>
+					</div>
+					<div class="stat-value">
+						<h2>5</h2>
+						<span class="pill pill-green pill-wide">1 berlangsung</span>
+					</div>
+					<p class="stat-note">3 pelatih bertugas</p>
+				</article>
+
+				<article class="card stat">
+					<div class="stat-top">
+						<p class="stat-label">Pendapatan Oktober</p>
+						<span class="stat-icon"><img src="assets/dashboard-admin/card-c-f-ico-r/card-c-f-group3.svg" alt=""></span>
+					</div>
+					<div class="stat-value">
+						<h2>Rp 86,4jt</h2>
+						<span class="pill pill-green">+12%</span>
+					</div>
+					<p class="stat-note">vs. September (Rp 77,1jt)</p>
+				</article>
+			</section>
+
+			<section class="layout">
+				<!-- KOLOM KIRI -->
+				<div class="col-left">
+					<div class="row-charts">
+						<!-- Donut -->
+						<article class="card">
+							<div class="card-head">
+								<div>
+									<h3 class="card-title">Status Member</h3>
+									<p class="muted">Aktif vs. Non-Aktif</p>
+								</div>
+							</div>
+
+							<div class="donut" style="--p: 74.3">
+								<div class="donut-center">
+									<strong>412</strong>
+									<span>Total Member</span>
+								</div>
+							</div>
+
+							<div class="legend">
+								<div class="legend-box">
+									<p><i class="dot dot-blue"></i>Aktif</p>
+									<strong>306</strong>
+								</div>
+								<div class="legend-box">
+									<p><i class="dot dot-gray"></i>Non-Aktif</p>
+									<strong>106</strong>
+								</div>
+							</div>
+						</article>
+
+						<!-- Bar chart -->
+						<article class="card">
+							<div class="card-head">
+								<div>
+									<h3 class="card-title">Pendapatan Bulanan</h3>
+									<p class="muted">Jan – Okt 2026 (juta Rupiah)</p>
+								</div>
+								<div class="chips">
+									<button class="chip active">2026</button>
+									<button class="chip">2025</button>
+								</div>
+							</div>
+
+							<div class="revenue">
+								<h2>Rp 703,5jt</h2>
+								<span class="pill pill-green">Total YTD</span>
+							</div>
+
+							<div class="bars">
+								<div class="bar" style="--v: 58"><span>58</span><i></i><b>Jan</b></div>
+								<div class="bar" style="--v: 62"><span>62</span><i></i><b>Feb</b></div>
+								<div class="bar" style="--v: 55"><span>55</span><i></i><b>Mar</b></div>
+								<div class="bar" style="--v: 68"><span>68</span><i></i><b>Apr</b></div>
+								<div class="bar" style="--v: 72"><span>72</span><i></i><b>Mei</b></div>
+								<div class="bar" style="--v: 70"><span>70</span><i></i><b>Jun</b></div>
+								<div class="bar" style="--v: 76"><span>76</span><i></i><b>Jul</b></div>
+								<div class="bar" style="--v: 79"><span>79</span><i></i><b>Agu</b></div>
+								<div class="bar" style="--v: 77.1"><span>77,1</span><i></i><b>Sep</b></div>
+								<div class="bar active" style="--v: 86.4"><span>86,4</span><i></i><b>Okt</b></div>
+							</div>
+						</article>
+					</div>
+
+					<!-- Tabel kelas -->
+					<article class="card">
+						<div class="card-head">
+							<div>
+								<h3 class="card-title">Kelas Hari Ini</h3>
+								<p class="muted">5 kelas · 3 pelatih bertugas</p>
+							</div>
+							<a href="jadwal-kelas.html" class="link">Lihat semua jadwal →</a>
+						</div>
+
+						<div class="table-wrap">
+							<table class="table">
+								<thead>
+									<tr>
+										<th>NAMA MURID</th>
+										<th>WAKTU</th>
+										<th>PELATIH</th>
+										<th>KOLAM</th>
+										<th>SISWA</th>
+										<th>STATUS</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td><div class="person"><span class="avatar">AP</span><strong>Alya Putri</strong></div></td>
+										<td>07:00 – 08:00</td>
+										<td><div class="person"><span class="avatar">RS</span>Coach Rina</div></td>
+										<td>Kolam A</td>
+										<td><b>12</b>/15</td>
+										<td><span class="status status-done">Selesai</span></td>
+									</tr>
+									<tr>
+										<td><div class="person"><span class="avatar">RP</span><strong>Rafi Pratama</strong></div></td>
+										<td>09:00 – 10:00</td>
+										<td><div class="person"><span class="avatar">BP</span>Coach Budi</div></td>
+										<td>Kolam B</td>
+										<td><b>10</b>/12</td>
+										<td><span class="status status-done">Selesai</span></td>
+									</tr>
+									<tr>
+										<td><div class="person"><span class="avatar">NK</span><strong>Nadia Kirana</strong></div></td>
+										<td>15:30 – 16:30</td>
+										<td><div class="person"><span class="avatar">DA</span>Coach Dimas</div></td>
+										<td>Kolam A</td>
+										<td><b>2</b>/2</td>
+										<td><span class="status status-live">Berlangsung</span></td>
+									</tr>
+									<tr>
+										<td><div class="person"><span class="avatar">KW</span><strong>Kevin Wijaya</strong></div></td>
+										<td>17:00 – 18:00</td>
+										<td><div class="person"><span class="avatar">RS</span>Coach Rina</div></td>
+										<td>Kolam A</td>
+										<td><b>14</b>/15</td>
+										<td><span class="status status-next">Akan Datang</span></td>
+									</tr>
+									<tr>
+										<td><div class="person"><span class="avatar">SM</span><strong>Salsa Maharani</strong></div></td>
+										<td>18:30 – 19:30</td>
+										<td><div class="person"><span class="avatar">BP</span>Coach Budi</div></td>
+										<td>Kolam B</td>
+										<td><b>9</b>/10</td>
+										<td><span class="status status-next">Akan Datang</span></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</article>
+				</div>
+
+				<!-- KOLOM KANAN -->
+				<div class="col-right">
+					<!-- Notifikasi -->
+					<article class="card">
+						<div class="card-head">
+							<h3 class="card-title">Notifikasi &amp; Tugas</h3>
+							<a href="#" class="link">Tandai dibaca</a>
+						</div>
+
+						<div class="chips">
+							<button class="chip active">Semua</button>
+							<button class="chip">Jadwal</button>
+							<button class="chip">Evaluasi</button>
+						</div>
+
+						<p class="section-label">PENGINGAT H-1</p>
+
+						<div class="notif">
+							<span class="notif-icon"><img src="assets/dashboard-admin/nt-ni-r/nt-group.svg" alt=""></span>
+							<div>
+								<p class="notif-title">Besok: Beginner Kids</p>
+								<p class="notif-text">07:00 · Kolam A · Coach Rina · 13 siswa</p>
+								<p class="notif-date">Senin, 12 Okt 2026</p>
+							</div>
+						</div>
+
+						<div class="notif">
+							<span class="notif-icon"><img src="assets/dashboard-admin/nt-ni-r/nt-group.svg" alt=""></span>
+							<div>
+								<p class="notif-title">Besok: Private Class</p>
+								<p class="notif-text">16:00 · Kolam B · Coach Dimas · 1 siswa</p>
+								<p class="notif-date">Senin, 12 Okt 2026</p>
+							</div>
+						</div>
+
+						<p class="section-label">TUGAS EVALUASI PELATIH</p>
+
+						<label class="task">
+							<input type="checkbox">
+							<span>Evaluasi Beginner Kids — Coach Rina</span>
+							<em class="pill pill-red">4 siswa</em>
+						</label>
+						<label class="task">
+							<input type="checkbox">
+							<span>Evaluasi Intermediate — Coach Budi</span>
+							<em class="pill pill-red">2 siswa</em>
+						</label>
+						<label class="task">
+							<input type="checkbox">
+							<span>Evaluasi Private — Coach Dimas</span>
+							<em class="pill pill-red">1 siswa</em>
+						</label>
+					</article>
+
+					<!-- Kuota -->
+					<article class="card">
+						<div class="card-head">
+							<div>
+								<h3 class="card-title">Kuota Hampir Habis</h3>
+								<p class="muted">5 siswa perlu perpanjangan paket</p>
+							</div>
+							<a href="cdm-data-member.html" class="link">Lihat semua</a>
+						</div>
+
+						<div class="quota">
+							<div class="quota-top">
+								<div class="person"><span class="avatar">FH</span><strong>Farel Hakim</strong></div>
+								<p><b class="red">1</b>/8 sesi</p>
+							</div>
+							<div class="progress"><i class="bg-red" style="width: 12.5%"></i></div>
+						</div>
+
+						<div class="quota">
+							<div class="quota-top">
+								<div class="person"><span class="avatar">GS</span><strong>Gita Safitri</strong></div>
+								<p><b class="orange">2</b>/12 sesi</p>
+							</div>
+							<div class="progress"><i class="bg-orange" style="width: 16.7%"></i></div>
+						</div>
+
+						<div class="quota">
+							<div class="quota-top">
+								<div class="person"><span class="avatar">IR</span><strong>Iqbal Ramadhan</strong></div>
+								<p><b class="orange">2</b>/8 sesi</p>
+							</div>
+							<div class="progress"><i class="bg-orange" style="width: 25%"></i></div>
+						</div>
+					</article>
+				</div>
+			</section>
+		</div>
+	</main>
+
+	<!-- Menu aktif otomatis -->
+	<script>
+		const page = location.pathname.split("/").pop() || "dashboard-admin.html";
+		document.querySelectorAll(".nav-item").forEach(link => {
+			if (link.getAttribute("href") === page) link.classList.add("active");
+		});
+	</script>
+</body>
+</html>

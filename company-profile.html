@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="css/reset.css" />
+  <link rel="stylesheet" href="css/global.css" />
+  <link rel="stylesheet" href="css/company-profile.css" />
+  <style>
+    /* ===== FIX: HERO STATS ===== */
+    .header-hero-stats {
+      display: flex;
+      align-items: flex-start;
+      gap: 56px;
+      margin-top: 39px;
+      margin-left: 2px;
+    }
+
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0;
+    }
+
+    .stat-item .header-hero-subtitle {
+      margin: 0;
+      color: #1565d8;
+      font-size: 28px;
+      font-weight: 800;
+      text-align: left;
+    }
+
+    .stat-item .stat-label {
+      color: #64748b;
+      font-size: 14px;
+      font-weight: 400;
+      text-align: left;
+      margin-top: 0;
+      line-height: 1.5;
+    }
+
+    /* ===== FIX: GOOGLE MAPS IFRAME ===== */
+    .section-lokasi-bg iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      border-radius: 20px;
+    }
+
+    .section-lokasi-bg {
+      width: 598px;
+      height: auto flex-shrink: 0;
+      padding: 0;
+      background: none;
+      border-radius: 20px;
+      overflow: hidden;
+    }
+
+    .section-lokasi {
+      display: flex;
+      align-items: stretch;
+      /* ← biar kedua kolom sama tinggi */
+      gap: 32px;
+    }
+
+
+    /* ===== FIX: FOOTER GRID ===== */
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr 1fr;
+      gap: 40px;
+      width: 100%;
+      max-width: 1136px;
+      margin: 0 auto;
+      text-align: left;
+    }
+
+    .footer-col {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .footer-col-brand {
+      gap: 16px;
+    }
+
+    .footer-brand-name {
+      color: #fff;
+      font-size: 20px;
+      font-weight: 800;
+      margin: 0;
+      line-height: 1.3;
+    }
+
+    .footer-desc {
+      color: #cbd5e1;
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    .footer-col-title {
+      color: #fff;
+      font-size: 15px;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    .footer-link {
+      color: #cbd5e1;
+      font-size: 14px;
+      font-weight: 400;
+      margin: 0;
+      cursor: pointer;
+      transition: color 0.2s;
+      line-height: 1.4;
+    }
+
+    .footer-link:hover {
+      color: #60a5fa;
+    }
+
+    .footer-copyright {
+      width: 100%;
+      max-width: 1136px;
+      color: #cbd5e1;
+      font-size: 13px;
+      font-weight: 400;
+      text-align: center;
+      margin: 0 auto;
+      padding: 24px 24px 0 24px;
+      border-top: 1px solid #1e293b;
+    }
+
+    /* hide old broken footer elements */
+    .footer-row-top,
+    .footer-row,
+    .footer-text-left,
+    .footer-text-natix-swim,
+    .footer-text-heading1,
+    .footer-text-heading2,
+    .footer-text-heading3,
+    .list5,
+    .list6,
+    .list7,
+    .footer>.footer-text {
+      display: none;
+    }
+
+    /* make footer use new structure */
+    .footer {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 48px;
+      padding: 70px 152px 28px 152px;
+      background-color: #0f172a;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media screen and (max-width: 1024px) {
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 40px 60px;
+      }
+
+      .footer {
+        padding: 50px 32px 28px 32px;
+      }
+
+      .section-lokasi-bg {
+        width: 100%;
+        max-width: 598px;
+        min-height: 400px;
+      }
+
+      .card-bg-plus-border9 {
+        width: 100%;
+        max-width: 498px;
+      }
+    }
+
+    @media screen and (max-width: 768px) {
+      .header-hero-stats {
+        gap: 32px;
+        flex-wrap: wrap;
+      }
+    }
+
+    @media screen and (max-width: 576px) {
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+
+      .footer {
+        padding: 40px 20px 24px 20px;
+      }
+
+      .header-hero-stats {
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .section-lokasi-bg {
+        min-height: 300px;
+      }
+    }
+
+    /* hide old rows */
+    .header-hero-row-bottom1,
+    .header-hero-row-bottom2 {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+  <header class="header">
+    <img src="assets/company-profile/header-natix-swim.png" class="header-natix-swim" />
+    <p class="header-text-natix-swim">Natix Swim</p>
+    <p class="header-text-link header-text-link1">Tentang</p>
+    <p class="header-text-link">Program</p>
+    <p class="header-text-link">Harga</p>
+    <p class="header-text-link">Pelatih</p>
+    <p class="header-text-link">Lokasi</p>
+    <button class="btn-link header-btn-link hover-bright">Daftar Trial</button>
+  </header>
+
+  <!-- HERO -->
+  <div class="header-hero">
+    <div class="header-hero-row1">
+      <div class="header-hero-col-left">
+        <button class="header-hero-btn-bg hover-dark">🏊 Sekolah Renang Anak & Dewasa</button>
+        <h1 class="header-hero-title">
+          <span>Belajar Renang <span class="sub-text-blue">Aman,<br />
+              Seru,</span> dan Terarah</span>
+        </h1>
+        <p class="header-hero-text-natix-swim">
+          Natix Swim membantu anak dan dewasa bisa berenang<br />
+          dengan percaya diri, dibimbing pelatih bersertifikat dan<br />
+          kurikulum yang bertahap.
+        </p>
+
+        <div class="header-hero-row2">
+          <button class="header-hero-btn-link header-hero-btn-link1 hover-bright">Coba Kelas Trial →</button>
+          <button class="header-hero-btn-link header-hero-btn-link2 hover-dark">Lihat Program</button>
+        </div>
+
+        <!-- FIXED: stats grouped per column -->
+        <div class="header-hero-stats">
+          <div class="stat-item">
+            <h2 class="header-hero-subtitle">500+</h2>
+            <p class="stat-label">Member Aktif</p>
+          </div>
+          <div class="stat-item">
+            <h2 class="header-hero-subtitle">15+</h2>
+            <p class="stat-label">Pelatih Bersertifikat</p>
+          </div>
+          <div class="stat-item">
+            <h2 class="header-hero-subtitle">8 Thn</h2>
+            <p class="stat-label">Pengalaman</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="header-hero-bg">
+        <div class="card-para card-para1">
+          <p class="card-para-text1">⭐ 4.9 / 5</p>
+          <p class="card-para-text2">dari 300+ ulasan orang tua</p>
+        </div>
+        <div class="card-para card-para2">
+          <p class="card-para-text1">🛟 100% Aman</p>
+          <p class="card-para-text2">Pengawasan di setiap sesi</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TENTANG -->
+  <div class="section-tentang">
+    <img src="assets/company-profile/section-tentang-bg.png" class="section-tentang-bg" />
+    <div class="section-tentang-col-right">
+      <button class="btn-background-k section-tentang-btn-bg hover-dark">Tentang Kami</button>
+      <h2 class="section-tentang-subtitle">
+        Tempat Belajar Renang yang<br />
+        Nyaman untuk Semua Usia
+      </h2>
+      <p class="section-tentang-text section-tentang-text1">
+        Natix Swim hadir sebagai sekolah renang yang fokus pada proses belajar yang menyenangkan dan teknik yang benar.
+      </p>
+      <p class="section-tentang-text section-tentang-text-setiap-member">
+        Setiap member belajar sesuai level kemampuannya, mulai dari<br />
+        pengenalan air sampai teknik gaya lanjutan.
+      </p>
+      <div class="section-tentang-list">
+        <div class="item">
+          <button class="item-btn-bg btn-light2 hover-dark">✓</button>
+          <p class="item-text">Kurikulum bertahap sesuai level</p>
+        </div>
+        <div class="item">
+          <button class="item-btn-bg btn-light2 hover-dark">✓</button>
+          <p class="item-text">Kelas kecil, maksimal 6 murid per pelatih</p>
+        </div>
+        <div class="item">
+          <button class="item-btn-bg btn-light2 hover-dark">✓</button>
+          <p class="item-text">Laporan perkembangan rutin setiap bulan</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROGRAM -->
+  <div class="section-program section-light">
+    <button class="btn-background-k section-program-btn-bg hover-dark">Program Kami</button>
+    <h2 class="subtitle-heading section-program-subtitle">Pilih Program Sesuai Kebutuhan</h2>
+    <p class="section-program-text">
+      Mulai dari bayi sampai dewasa, semua bisa belajar renang dengan metode yang<br />
+      tepat.
+    </p>
+    <div class="section-program-row-bottom">
+      <div class="card-background-plus-border-c card-bg-plus-border1">
+        <button class="btn-background-l card-background-plus-border-btn1 hover-dark">👶</button>
+        <p class="text-heading-a card-background-plus-border-text-heading1">Baby Swim</p>
+        <button class="btn-background-m card-background-plus-border-btn2 hover-dark">6 bln – 3 thn</button>
+        <p class="text-m">
+          Pengenalan air bersama orang<br />
+          tua untuk membangun rasa<br />
+          nyaman sejak dini.
+        </p>
+        <div class="list-a list1">
+          <p class="text-item"><b class="bold2">✓ </b>Didampingi orang tua</p>
+          <p class="text-item list-text-item2"><b class="bold2">✓ </b>30 menit/sesi</p>
+          <p class="text-item list-text-item3"><b class="bold2">✓ </b>Kolam dangkal</p>
+        </div>
+      </div>
+      <div class="card-background-plus-border-c card-bg-plus-border2">
+        <button class="btn-background-l card-background-plus-border-btn1 hover-dark">🧒</button>
+        <p class="text-heading-a card-background-plus-border-text-heading1">Group Kids</p>
+        <button class="btn-background-m card-background-plus-border-btn2 hover-dark">4 – 12 thn</button>
+        <p class="text-m">
+          Belajar renang berkelompok<br />
+          dengan suasana seru dan<br />
+          kurikulum bertahap.
+        </p>
+        <div class="list-a list1">
+          <p class="text-item"><b class="bold2">✓ </b>Maks. 6 anak/kelas</p>
+          <p class="text-item list-text-item2"><b class="bold2">✓ </b>4 gaya dasar renang</p>
+          <p class="text-item list-text-item3"><b class="bold2">✓ </b>60 menit/sesi</p>
+        </div>
+      </div>
+      <div class="card-background-plus-border-c card-bg-plus-border3">
+        <button class="btn-background-l card-background-plus-border-btn1 hover-dark">🧑</button>
+        <p class="text-heading-a card-background-plus-border-text-heading1">Group Dewasa</p>
+        <button class="btn-background-m card-background-plus-border-btn2 hover-dark">13 thn ke atas</button>
+        <p class="text-m">
+          Untuk remaja & dewasa yang<br />
+          ingin mulai dari nol atau<br />
+          memperbaiki teknik.
+        </p>
+        <div class="list-a list1">
+          <p class="text-item"><b class="bold2">✓ </b>Maks. 6 anak/kelas</p>
+          <p class="text-item list-text-item2"><b class="bold2">✓ </b>Kelas pemula–lanjutan</p>
+          <p class="text-item list-text-item3"><b class="bold2">✓ </b>60 menit/sesi</p>
+        </div>
+      </div>
+      <div class="card-bg-plus-border4">
+        <button class="btn-background-l card-bg-plus-border-btn-bg1 hover-dark">🎯</button>
+        <p class="text-heading-a card-bg-plus-border-text-heading1">Private</p>
+        <button class="btn-background-n card-bg-plus-border-btn-bg2 hover-dark">Semua usia</button>
+        <p class="text-m">
+          Satu pelatih untuk satu murid,<br />
+          jadwal fleksibel dan progres<br />
+          lebih cepat.
+        </p>
+        <div class="list-a list3">
+          <p class="text-item"><b class="bold2">✓ </b>1 on 1 dengan pelatih</p>
+          <p class="text-item list-text-item2"><b class="bold2">✓ </b>Jadwal fleksibel</p>
+          <p class="text-item list-text-item3"><b class="bold2">✓ </b>Target personal</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- KENAPA -->
+  <div class="section-kenapa">
+    <button class="btn-background-k section-kenapa-btn-bg hover-dark">Kenapa Natix Swim</button>
+    <h2 class="section-kenapa-subtitle">Lebih dari Sekadar Les Renang</h2>
+    <p class="section-kenapa-text text-blue2">
+      Kami memastikan setiap member belajar dengan aman, nyaman, dan terus berkembang.
+    </p>
+    <div class="section-kenapa-row">
+      <div class="card-border-a card-border1">
+        <button class="btn-background-o card-border-btn-bg1 hover-dark">🏅</button>
+        <p class="text-heading-b card-border-text-heading1">Pelatih Bersertifikat</p>
+        <p class="card-border-text-bottom1">
+          Seluruh pelatih memiliki lisensi kepelatihan<br />
+          dan sertifikat.
+        </p>
+      </div>
+      <div class="card-border2">
+        <button class="btn-background-o card-border-btn-bg4 hover-dark">🛟</button>
+        <p class="text-heading-b card-border-text-heading4">Keamanan Utama</p>
+        <p class="card-border-text-bottom3 text-blue2">
+          Pengawasan penuh, alat bantu apung<br />
+          lengkap, dan rasio murid per pelatih yang<br />
+          kecil.
+        </p>
+      </div>
+      <div class="card-border-a card-border3">
+        <button class="btn-background-o card-border-btn-bg1 hover-dark">📈</button>
+        <p class="text-heading-b card-border-text-heading1">Progres Terukur</p>
+        <p class="card-border-text-bottom1">
+          Setiap murid punya level dan target, dengan<br />
+          laporan perkembangan tiap bulan.
+        </p>
+      </div>
+    </div>
+    <div class="section-kenapa-row-bottom">
+      <div class="card-border-b card-border4">
+        <button class="btn-background-o card-border-btn-bg2 hover-dark">💧</button>
+        <p class="card-border-text-heading2">Kolam Bersih & Terawat</p>
+        <p class="card-border-text-bottom2">
+          Kualitas air dicek rutin setiap hari agar<br />
+          nyaman untuk anak maupun dewasa.
+        </p>
+      </div>
+      <div class="card-border-b card-border5">
+        <button class="btn-background-o card-border-btn-bg2 hover-dark">🗓️</button>
+        <p class="card-border-text-heading2">Jadwal Fleksibel</p>
+        <p class="card-border-text-bottom2">
+          Banyak pilihan slot pagi, sore, dan akhir<br />
+          pekan, serta bisa reschedule.
+        </p>
+      </div>
+      <div class="card-border-b card-border6">
+        <button class="btn-background-o card-border-btn-bg2 hover-dark">🎓</button>
+        <p class="card-border-text-heading2">Sertifikat Kelulusan</p>
+        <p class="card-border-text-bottom2">
+          Murid mendapat sertifikat setiap kali berhasil<br />
+          naik level.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- HARGA -->
+  <div class="section-harga">
+    <button class="btn-background-k section-harga-btn-bg hover-dark">Paket Harga</button>
+    <h2 class="subtitle-heading section-harga-subtitle">Paket Belajar yang Terjangkau</h2>
+    <p class="text-n">Harga per bulan, sudah termasuk tiket masuk kolam.</p>
+    <div class="section-harga-row">
+      <div class="card-border-c card-border7">
+        <p class="card-border-text-heading3">Group Kids</p>
+        <p class="card-border-text1">8 sesi / bulan</p>
+        <div class="row-h">
+          <h2 class="row-subtitle">Rp450rb</h2>
+          <p class="row-text4">/bln</p>
+        </div>
+        <div class="list-a list2">
+          <p class="text-item"><b class="bold2">✓ </b>Maks. 6 anak/kelas</p>
+          <p class="text-item list-text-item2"><b class="bold2">✓ </b>Laporan progres setiap minggu</p>
+          <p class="text-item list-text-item3"><b class="bold2">✓ </b>Sertifikat naik level</p>
+        </div>
+        <button class="card-border-btn-link hover-dark">Pilih Paket</button>
+      </div>
+      <div class="card-overlay-plus-border-shadow">
+        <button class="btn-background-n card-overlay-plus-border-shadow-btn-bg hover-bright">Paling Diminati</button>
+        <p class="card-overlay-plus-border-shadow-text-heading text5">Group Dewasa</p>
+        <p class="text-blue2">8 sesi / bulan</p>
+        <div class="row-h">
+          <h2 class="row-subtitle">Rp500rb</h2>
+          <p class="row-text4">/bln</p>
+        </div>
+        <div class="list-b list4">
+          <p class="text-item"><b class="bold2">✓ </b>Kelas pemula sampai lanjutan</p>
+          <p class="text-item"><b class="bold2">✓ </b>Pilihan jadwal pagi & sore</p>
+          <p class="text-item list-text-item6"><b class="bold2">✓ </b>Evaluasi teknik berkala</p>
+          <p class="text-item"><b class="bold2">✓ </b>Sertifikat naik level</p>
+        </div>
+        <button class="btn-link card-overlay-plus-border-shadow-btn-link hover-bright">Pilih Paket</button>
+      </div>
+      <div class="card-border-c card-border8">
+        <p class="card-border-text-heading3">Private</p>
+        <p class="card-border-text1">4 sesi / bulan</p>
+        <div class="row-h row1">
+          <h2 class="row-subtitle">Rp750rb</h2>
+          <p class="row-text4">/bln</p>
+        </div>
+        <div class="list-a list2">
+          <p class="text-item"><b class="bold2">✓ </b>1 murid, 1 pelatih</p>
+          <p class="text-item list-text-item2"><b class="bold2">✓ </b>Jadwal fleksibel</p>
+          <p class="text-item list-text-item3"><b class="bold2">✓ </b>Program sesuai target pribadi</p>
+        </div>
+        <button class="card-border-btn-link hover-dark">Pilih Paket</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PELATIH -->
+  <div class="section-pelatih section-light">
+    <button class="btn-background-k section-pelatih-btn-bg hover-dark">Tim Pelatih</button>
+    <h2 class="subtitle-heading section-pelatih-subtitle">Dibimbing Pelatih Berpengalaman</h2>
+    <p class="text-n">Pelatih kami sabar, ramah anak, dan bersertifikat resmi.</p>
+    <div class="section-pelatih-row-bottom">
+      <div class="card-bg-plus-border5">
+        <button class="btn-background-p card-bg-plus-border-btn-bg3 hover-bright">RA</button>
+        <p class="text-heading-c card-bg-plus-border-text-heading2">Rizky Aditya</p>
+        <p class="coach">Head Coach · 10 thn pengalaman</p>
+        <button class="btn-background-m card-bg-plus-border-btn-bg4 hover-dark">Group Dewasa</button>
+      </div>
+      <div class="card-background-plus-border-d card-bg-plus-border6">
+        <button class="btn-background-p card-background-plus-border-btn3 hover-bright">SN</button>
+        <p class="text-heading-c card-background-plus-border-text-heading2">Sari Nuraini</p>
+        <p class="coach">Coach · 7 thn pengalaman</p>
+        <button class="btn-background-n card-background-plus-border-btn4 hover-dark">Baby Swim</button>
+      </div>
+      <div class="card-background-plus-border-d card-bg-plus-border7">
+        <button class="btn-background-p card-background-plus-border-btn3 hover-bright">DP</button>
+        <p class="text-heading-c card-background-plus-border-text-heading2">Dimas Pratama</p>
+        <p class="coach">Coach · 6 thn pengalaman</p>
+        <button class="btn-background-n card-background-plus-border-btn4 hover-dark">Group Kids</button>
+      </div>
+      <div class="card-background-plus-border-d card-bg-plus-border8">
+        <button class="btn-background-p card-background-plus-border-btn3 hover-bright">AM</button>
+        <p class="text-heading-c card-background-plus-border-text-heading2">Ayu Maharani</p>
+        <p class="coach">Coach · 5 thn pengalaman</p>
+        <button class="btn-background-n card-background-plus-border-btn4 hover-dark">Private</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TESTIMONI -->
+  <div class="section-testimoni">
+    <button class="btn-background-k section-testimoni-btn-bg hover-dark">Testimoni</button>
+    <h2 class="subtitle-heading section-testimoni-subtitle">Kata Mereka tentang Natix Swim</h2>
+    <p class="text-n">Cerita dari orang tua dan member yang sudah belajar bersama kami.</p>
+    <div class="section-testimoni-row">
+      <div class="card-border-d card-border9">
+        <p class="card-border-text-top">★★★★★</p>
+        <p class="card-border-text2">
+          "Anak saya awalnya takut air, sekarang<br />
+          malah tidak sabar setiap jadwal renang.<br />
+          Pelatihnya sabar sekali."
+        </p>
+        <div class="card-border-row-bottom">
+          <button class="card-border-btn-bg3 btn1 hover-dark">IW</button>
+          <div class="card-border-col">
+            <p class="card-border-text3">Ibu Wulan</p>
+            <p class="text-c card-border-text-orang-tua-murid">Orang tua murid Group Kids</p>
+          </div>
+        </div>
+      </div>
+      <div class="card-border-d card-border10">
+        <p class="card-border-text-top">★★★★★</p>
+        <p class="card-border-text2">
+          "Umur 30 baru belajar renang, ternyata<br />
+          tidak canggung. Dalam 3 bulan sudah bisa<br />
+          gaya bebas."
+        </p>
+        <div class="card-border-row-bottom">
+          <button class="card-border-btn-bg3 btn1 hover-dark">BH</button>
+          <div class="card-border-col">
+            <p class="card-border-text3">Bayu Hartono</p>
+            <p class="text-c card-border-text-orang-tua-murid">Member Group Dewasa</p>
+          </div>
+        </div>
+      </div>
+      <div class="card-border-d card-border11">
+        <p class="card-border-text-top">★★★★★</p>
+        <p class="card-border-text2">
+          "Kelas Baby Swim-nya hangat dan aman.<br />
+          Bonding saya dengan si kecil jadi makin<br />
+          dekat."
+        </p>
+        <div class="card-border-row-bottom">
+          <button class="card-border-btn-bg3 btn1 hover-dark">RF</button>
+          <div class="card-border-col">
+            <p class="card-border-text3">Rina Fitriani</p>
+            <p class="text-c card-border-text-orang-tua-murid">Orang tua murid Baby Swim</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LOKASI + GOOGLE MAPS -->
+  <div class="section-lokasi">
+    <div class="card-bg-plus-border9">
+      <button class="btn-background-k card-bg-plus-border-btn-bg5 hover-dark">Lokasi & Jam</button>
+      <p class="card-bg-plus-border-text2 text5">Jam Operasional</p>
+
+      <div class="para para1">
+        <p class="para-text1">Senin – Jumat</p>
+        <p class="para-text2">06.00 – 20.00</p>
+      </div>
+      <div class="para">
+        <p class="para-text1">Sabtu</p>
+        <p class="para-text2">06.00 – 17.00</p>
+      </div>
+      <div class="para">
+        <p class="para-text1">Minggu</p>
+        <p class="para-text2">07.00 – 15.00</p>
+      </div>
+      <div class="para">
+        <p class="para-text1">Hari Libur Nasional</p>
+        <p class="para-text2">Tutup</p>
+      </div>
+
+      <div class="row-i row3">
+        <p class="row-text-b row-text5">📍</p>
+        <p class="row-text-b row-text-vega-hotel-gading">Vega Hotel Gading Serpong</p>
+      </div>
+      <div class="row-i row4">
+        <p class="row-text-b row-text5">📞</p>
+        <p class="row-text-b row-text-vega-hotel-gading">0812-3456-7890</p>
+      </div>
+      <div class="row-i row5">
+        <p class="row-text-b row-text5">✉️</p>
+        <p class="row-text-b row-text-vega-hotel-gading">natixswim@gmail.com</p>
+      </div>
+    </div>
+
+    <div class="section-lokasi-bg">
+      <iframe src="https://www.google.com/maps?q=Vega+Hotel+Gading+Serpong&output=embed" allowfullscreen=""
+        loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+        title="Peta Lokasi Natix Swim - Vega Hotel Gading Serpong">
+      </iframe>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="section-cta">
+    <div class="section-cta-col-left">
+      <h2 class="section-cta-subtitle">Siap Mulai Belajar Renang?</h2>
+      <p class="section-cta-text">
+        Daftar kelas trial sekarang dan rasakan langsung cara belajar di Natix Swim.
+      </p>
+    </div>
+    <button class="btn-link section-cta-btn-link hover-dark">Daftar Kelas Trial →</button>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-col footer-col-brand">
+        <p class="footer-brand-name">Natix Swim</p>
+        <p class="footer-desc">
+          Sekolah renang untuk bayi, anak, dan<br />
+          dewasa, dengan pelatih bersertifikat dan<br />
+          kurikulum bertahap.
+        </p>
+      </div>
+      <div class="footer-col">
+        <p class="footer-col-title">Program</p>
+        <p class="footer-link">Baby Swim</p>
+        <p class="footer-link">Group Kids</p>
+        <p class="footer-link">Group Dewasa</p>
+        <p class="footer-link">Private</p>
+      </div>
+      <div class="footer-col">
+        <p class="footer-col-title">Perusahaan</p>
+        <p class="footer-link">Tentang Kami</p>
+        <p class="footer-link">Pelatih</p>
+        <p class="footer-link">Harga</p>
+        <p class="footer-link">Lokasi</p>
+      </div>
+      <div class="footer-col">
+        <p class="footer-col-title">Ikuti Kami</p>
+        <p class="footer-link">Instagram</p>
+        <p class="footer-link">TikTok</p>
+        <p class="footer-link">YouTube</p>
+        <p class="footer-link">Facebook</p>
+      </div>
+    </div>
+    <p class="footer-copyright">© 2026 Natix Swim. All rights reserved.</p>
+  </footer>
+</body>
+
+</html>
