@@ -114,7 +114,7 @@ $maxBar = max(max($pendapatan), 1);
 
 /* ---------- Pengingat H-1 ---------- */
 $pengingat = ambil($pdo, "
-    SELECT pk.nama_program, j.jam_mulai, j.kolam, c.nama AS nama_pelatih,
+    SELECT pk.nama_program, j.jam_mulai, j.kolam, c.nama AS pelatih,
            COUNT(jp.member_id) AS jml_siswa
     FROM jadwal_kelas j
     JOIN program_kelas pk ON pk.id = j.program_id
@@ -125,7 +125,7 @@ $pengingat = ambil($pdo, "
 
 /* ---------- Tugas evaluasi ---------- */
 $evaluasi = ambil($pdo, "
-    SELECT pk.nama_program, c.nama AS nama_pelatih, COUNT(*) AS jml
+    SELECT pk.nama_program, c.nama AS pelatih, COUNT(*) AS jml
     FROM attendance a
     JOIN jadwal_kelas j   ON j.id  = a.jadwal_id
     JOIN program_kelas pk ON pk.id = j.program_id
@@ -622,7 +622,7 @@ img, svg, video { max-width: 100%; }
 									<?php foreach ($kelas as $k): ?>
 										<tr>
 											<td>
-												<div class="person"><span class="avatar"><?= inisial($k['nama_member']) ?></span><strong><?= e($k['nama_member']) ?></strong></div>
+												<div class="person"><span class="avatar"><?= inisial($k['nama_program']) ?></span><strong><?= e($k['nama_program']) ?></strong></div>
 											</td>
 											<td><?= substr($k['jam_mulai'], 0, 5) ?> – <?= substr($k['jam_selesai'], 0, 5) ?></td>
 											<td>
@@ -715,9 +715,9 @@ img, svg, video { max-width: 100%; }
 							<div class="quota">
 								<div class="quota-top">
 									<div class="person">
-										<span class="avatar"><?= inisial($q['nama_member']) ?></span>
+										<span class="avatar"><?= inisial($q['nama']) ?></span>
 										<div>
-											<strong><?= e($q['nama_member']) ?></strong>
+											<strong><?= e($q['nama']) ?></strong>
 											<p class="muted"><?= e($q['nama_paket'] ?? $q['nama_program'] ?? '-') ?></p>
 										</div>
 									</div>
