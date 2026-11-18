@@ -156,9 +156,9 @@ function gqGajiPeriodePelatih(PDO $pdo, int $tahun, int $bulan, int $pelatihId):
 function gqTambahGaji(PDO $pdo, int $tahun, int $bulan, int $pelatihId, array $sesi, int $gajiSesi, int $total, string $rincian, string $now): void
 {
     $pdo->prepare('INSERT INTO gaji (tahun, bulan, pelatih_id, sesi_kids, sesi_dewasa, sesi_private, gaji_sesi, total, rincian, dibuat_at, updated_at)
-                   VALUES (:t,:b,:p,:k,:d,:v,:g,:tot,:r,:n,:n)')
+                   VALUES (:t,:b,:p,:k,:d,:v,:g,:tot,:r,:n,:n2)')
         ->execute([':t' => $tahun, ':b' => $bulan, ':p' => $pelatihId, ':k' => $sesi['kids'], ':d' => $sesi['dewasa'], ':v' => $sesi['private'],
-                   ':g' => $gajiSesi, ':tot' => $total, ':r' => $rincian, ':n' => $now]);
+                   ':g' => $gajiSesi, ':tot' => $total, ':r' => $rincian, ':n' => $now, ':n2' => $now]);
 }
 
 function gqUpdateDraft(PDO $pdo, int $id, array $sesi, int $gajiSesi, int $total, ?string $rincian, string $now): void
