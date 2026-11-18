@@ -539,6 +539,7 @@ if (!function_exists('nvSidebar')) {
             ['Administrasi', [
                 ['Transaksi', 'administrasi.php', 'card', ['administrasi-detail.php'], false],
                 ['Laporan Keuangan', 'administrasi-laporan.php', 'chart', [], false],
+                ['Gaji', 'gaji.php', 'wallet', [], false],
             ]],
             ['AI Assistant', [
                 ['Chat Log', 'manajemen-ai-chat.php', 'chat', [], true],
@@ -562,6 +563,7 @@ if (!function_exists('nvSidebar')) {
             'calendar' => '<rect x="3.5" y="5" width="17" height="16" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/>',
             'check'    => '<path d="M20 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V6a2 2 0 012-2h9"/><path d="M8.5 11.5l3 3L21 5"/>',
             'card'     => '<rect x="2.5" y="5" width="19" height="14" rx="2.5"/><path d="M2.5 10h19"/>',
+            'wallet'   => '<path d="M3 7a2 2 0 012-2h13v4"/><path d="M3 7v11a2 2 0 002 2h15a1 1 0 001-1v-3"/><path d="M21 9h-4a2 2 0 000 4h4z"/>',
             'chart'    => '<path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/>',
             'chat'     => '<path d="M21 11.5a8.5 8.5 0 01-12.6 7.4L3 20.5l1.6-5A8.5 8.5 0 1121 11.5z"/>',
             'note'     => '<path d="M21 15a2 2 0 01-2 2H8l-5 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>',
@@ -921,6 +923,17 @@ img, svg, video { max-width: 100%; }
                 <div class="lp-stat"><p class="l">Program Terlaris</p><p class="n"><?= h($terlaris) ?></p></div>
             </div>
 
+<?php
+require_once __DIR__ . '/gaji-query.php';
+$gjKeluar = 0;
+foreach ($r['bulan'] as [$gjT, $gjB]) $gjKeluar += gqTotalDibayar($pdo, $gjT, $gjB);
+?>
+            <style>#lp-gaji { grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 0; } @media (max-width: 900px) { #lp-gaji { grid-template-columns: 1fr; } }</style>
+            <div class="lp-stats" id="lp-gaji">
+                <div class="lp-stat"><p class="l">Pengeluaran Gaji Coach</p><p class="n"><?= h(trJt($gjKeluar)) ?></p><p class="s"><a href="gaji.php" style="color:#2563eb;text-decoration:none">Lihat gaji →</a></p></div>
+                <div class="lp-stat"><p class="l">Laba Bersih (setelah gaji)</p><p class="n"><?= h(trJt($total - $gjKeluar)) ?></p><p class="s">Pendapatan − gaji coach</p></div>
+                <div class="lp-stat"><p class="l">Gaji / Pendapatan</p><p class="n"><?= $total > 0 ? h(round($gjKeluar / $total * 100)) . '%' : '-' ?></p><p class="s">Periode <?= (int)$r['n'] ?> Bulan</p></div>
+            </div>
             <div class="ad-card ad-card-pad">
                 <p class="ad-card-title">Tren Pendapatan <?= (int)$r['n'] ?> Bulan</p>
                 <p class="ad-card-sub"><?= h($rentangPanjang) ?></p>
