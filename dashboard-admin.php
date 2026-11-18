@@ -91,7 +91,17 @@ if (!in_array($tahunPdp, [$tahunIni, $tahunLalu], true)) {
 }
 
 // Ambil data 2 tahun sekaligus
-$rows = ambil($pdo, "SELECT tahun, bulan, pendapatan_juta AS total FROM v_pendapatan_bulanan WHERE tahun = ? ORDER BY bulan", [$tahunPdp]);
+// Sumber sama dengan halaman Laporan Keuangan: laporan_keuangan (rupiah) -> juta
+$rows = ambil($pdo, "SELECT tahun, bulan, total_pendapatan AS total FROM laporan_keuangan WHERE tahun = ? ORDER BY bulan", [$tahunPdp]);
+// Bulan yang belum punya catatan laporan_keuangan: dijumlahkan dari tabel pembayaran
+$sudahAda = [];
+foreach ($rows as $r) { $sudahAda[(int) $r['bulan']] = true; }
+$dariByr = ambil($pdo, "SELECT MONTH(tanggal_bayar) AS bulan, SUM(jumlah) AS total FROM pembayaran WHERE YEAR(tanggal_bayar) = ? GROUP BY MONTH(tanggal_bayar)", [$tahunPdp]);
+foreach ($dariByr as $r) {
+  if (empty($sudahAda[(int) $r['bulan']])) {
+    $rows[] = ['tahun' => $tahunPdp, 'bulan' => (int) $r['bulan'], 'total' => $r['total']];
+  }
+}
 
 $dataPdp = [$tahunLalu => [], $tahunIni => []];
 foreach ($rows as $r) {
@@ -605,7 +615,7 @@ img, svg, video { max-width: 100%; }
 							<table class="table">
 								<thead>
 									<tr>
-										<th>NAMA MURID</th>
+										<th>PROGRAM</th>
 										<th>WAKTU</th>
 										<th>PELATIH</th>
 										<th>KOLAM</th>
