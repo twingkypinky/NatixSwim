@@ -498,6 +498,14 @@ img, svg, video { max-width: 100%; }
 .btn-btn-primary1 { font-style: normal !important; }
 .col-harga { font-weight: 400 !important; color: #374151 !important; }
 .badge-cat, .badge-status { white-space: nowrap; line-height: 1.5; overflow: visible; }
+/* kp-stat-fix: ke-4 kartu statistik dibuat seragam */
+.main-stats { display: grid !important; grid-template-columns: repeat(4, minmax(0, 1fr)) !important; gap: 16px !important; width: 100% !important; align-items: stretch !important; }
+.main-stats > * { position: static !important; inset: auto !important; transform: none !important; width: auto !important; height: auto !important; min-height: 92px; margin: 0 !important; padding: 18px 20px !important; box-sizing: border-box !important; display: flex !important; flex-direction: row !important; align-items: center !important; justify-content: flex-start !important; gap: 14px !important; background: #fff !important; border: 1px solid #eef0f4 !important; border-radius: 16px !important; min-width: 0; }
+.main-stats .group-o { position: static !important; inset: auto !important; transform: none !important; width: auto !important; height: auto !important; margin: 0 !important; padding: 0 !important; display: block !important; flex: 1 1 auto; min-width: 0; text-align: left !important; }
+.main-stats .group-o p { position: static !important; transform: none !important; margin: 0 !important; font-size: 14px !important; line-height: 1.3 !important; color: #6b7280 !important; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.main-stats .group-o h2 { position: static !important; transform: none !important; margin: 4px 0 0 !important; font-size: 28px !important; line-height: 1.1 !important; font-weight: 700 !important; color: #111827 !important; }
+@media (max-width: 1000px) { .main-stats { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; } }
+@media (max-width: 560px) { .main-stats { grid-template-columns: 1fr !important; } }
 .grid-row > div, .grid-header > div { min-width: 0; }
 .tools-btn-fil { height: auto !important; line-height: 1.4 !important; padding-right: 32px !important; text-overflow: clip !important; overflow: visible !important; }
 .btn-icon svg { flex: none; overflow: visible; }
