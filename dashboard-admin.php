@@ -74,7 +74,7 @@ foreach ($kelas as &$k) {
 	} else {
 		$k['_s'] = ['status-done', 'Selesai'];
 	}
-	$pelatihSet[$k['nama_pelatih']] = true;
+	$pelatihSet[$k['pelatih']] = true;
 }
 unset($k);
 $jmlKelas   = count($kelas);
@@ -91,7 +91,7 @@ if (!in_array($tahunPdp, [$tahunIni, $tahunLalu], true)) {
 }
 
 // Ambil data 2 tahun sekaligus
-$rows = ambil($pdo, "SELECT bulan, pendapatan_juta AS total FROM v_pendapatan_bulanan WHERE tahun = ? ORDER BY bulan", [$tahunPdp]);
+$rows = ambil($pdo, "SELECT tahun, bulan, pendapatan_juta AS total FROM v_pendapatan_bulanan WHERE tahun = ? ORDER BY bulan", [$tahunPdp]);
 
 $dataPdp = [$tahunLalu => [], $tahunIni => []];
 foreach ($rows as $r) {
@@ -626,7 +626,7 @@ img, svg, video { max-width: 100%; }
 											</td>
 											<td><?= substr($k['jam_mulai'], 0, 5) ?> – <?= substr($k['jam_selesai'], 0, 5) ?></td>
 											<td>
-												<div class="person"><span class="avatar"><?= inisial($k['nama_pelatih']) ?></span><?= e($k['nama_pelatih']) ?></div>
+												<div class="person"><span class="avatar"><?= inisial($k['pelatih']) ?></span><?= e($k['pelatih']) ?></div>
 											</td>
 											<td><?= e($k['kolam']) ?></td>
 											<td><b><?= (int)$k['jumlah_siswa'] ?></b>/<?= (int)$k['kapasitas'] ?></td>
@@ -667,7 +667,7 @@ img, svg, video { max-width: 100%; }
 									<span class="notif-icon"><img src="assets/dashboard-admin/nt-ni-r/nt-group.svg" alt=""></span>
 									<div>
 										<p class="notif-title">Besok: <?= e($p['nama_program']) ?></p>
-										<p class="notif-text"><?= substr($p['jam_mulai'], 0, 5) ?> · <?= e($p['kolam']) ?> · <?= e($p['nama_pelatih']) ?> · <?= (int)$p['jml_siswa'] ?> siswa</p>
+										<p class="notif-text"><?= substr($p['jam_mulai'], 0, 5) ?> · <?= e($p['kolam']) ?> · <?= e($p['pelatih']) ?> · <?= (int)$p['jml_siswa'] ?> siswa</p>
 									</div>
 								</div>
 							<?php endforeach; ?>
@@ -686,7 +686,7 @@ img, svg, video { max-width: 100%; }
 									<span class="notif-icon"><img src="assets/dashboard-admin/nt-ni-r/nt-group1.svg" alt=""></span>
 									<div>
 										<p class="notif-title">Evaluasi belum diisi: <?= e($ev['nama_program']) ?></p>
-										<p class="notif-text"><?= e($ev['nama_pelatih']) ?> · <?= (int)$ev['jml'] ?> siswa menunggu</p>
+										<p class="notif-text"><?= e($ev['pelatih']) ?> · <?= (int)$ev['jml'] ?> siswa menunggu</p>
 									</div>
 								</div>
 							<?php endforeach; ?>
