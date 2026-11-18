@@ -760,6 +760,14 @@ img, svg, video { max-width: 100%; }
   .jw-modal { padding: 20px 16px; } .jw-info { grid-template-columns: 90px 1fr; }
   .jw-addrow { flex-direction: column; }
 }
+/* jw-fit: kalender pas satu layar, tanpa geser-geser (desktop) */
+@media (min-width: 641px) {
+  .jw-cal { display: flex !important; flex-direction: column; height: calc(100vh - 330px); min-height: 460px; }
+  .jw-scroll { flex: 1 1 auto; min-height: 0; overflow-x: hidden !important; overflow-y: auto !important; scrollbar-width: thin; }
+  .jw-grid { min-height: 100%; grid-template-rows: auto; grid-auto-rows: minmax(72px, 1fr); }
+  .jw-grid .jw-corner, .jw-grid .jw-dayh { position: sticky; top: 0; z-index: 2; }
+  .jw-grid .jw-empty { align-self: center; }
+}
 </style>
 </head>
 <body>
