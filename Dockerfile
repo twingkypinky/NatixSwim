@@ -15,3 +15,4 @@ RUN mkdir -p /app/uploads /app/assets/uploads && chmod -R 777 /app/uploads /app/
 
 # Railway memberi nomor port lewat variabel PORT
 CMD ["sh", "-c", "php -S 0.0.0.0:${PORT:-8080} -t /app"]
+RUN printf "display_errors=Off\nlog_errors=On\nerror_log=/dev/stderr\n" > /usr/local/etc/php/conf.d/zz-prod.ini
