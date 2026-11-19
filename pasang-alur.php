@@ -119,7 +119,7 @@ if (!function_exists('nvSidebar')) {
                 ['Payroll', 'gaji.php', 'wallet', [], false],
             ]],
             ['AI Assistant', [
-                ['Chat Log', 'manajemen-ai-chat.php', 'chat', [], false],
+                ['Chat Log', 'manajemen-ai-chat.php', 'chat', [], true],
                 ['Knowledge Base', 'manajemen-ai1.php', 'note', [], false],
                 ['Otomasi Pesan', 'manajemen-ai2.php', 'zap', [], false],
                 ['Analitik AI', 'manajemen-ai-analitik.php', 'trend', [], true],
@@ -702,7 +702,7 @@ muat();
         var b = e.target.closest('.nv-burger'); if (b) { document.body.classList.toggle('nv-open'); return; }
         if (e.target.id === 'nv-scrim') { tutup(); return; }
         var a = e.target.closest('.nv-side a, .nv-crumb a, .nv-topbar a'); if (!a) return;
-        if (a.dataset.belum) { e.preventDefault(); toast('Halaman ' + a.dataset.belum + ' belum tersedia.'); return; }
+        if (a.dataset.belum) { e.preventDefault(); toast('Halaman ' + a.dataset.belum + ' tidak tersedia.'); return; }
         var h = a.getAttribute('href') || '';
         if (e.defaultPrevented || e.button || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || a.target === '_blank' || a.hasAttribute('download') || /^(#|mailto:|tel:|javascript:)/i.test(h)) return;
         var u; try { u = new URL(a.href, location.href); } catch (x) { return; }
@@ -878,7 +878,7 @@ if (!function_exists('nvSidebar')) {
                 ['Payroll', 'gaji.php', 'wallet', [], false],
             ]],
             ['AI Assistant', [
-                ['Chat Log', 'manajemen-ai-chat.php', 'chat', [], false],
+                ['Chat Log', 'manajemen-ai-chat.php', 'chat', [], true],
                 ['Simulator Chat', 'simulator-wa.php', 'chat', [], false],
                 ['Knowledge Base', 'manajemen-ai1.php', 'note', [], false],
                 ['Otomasi Pesan', 'manajemen-ai2.php', 'zap', [], false],
@@ -1481,7 +1481,7 @@ $('sm-reset').onclick = async () => {
         var b = e.target.closest('.nv-burger'); if (b) { document.body.classList.toggle('nv-open'); return; }
         if (e.target.id === 'nv-scrim') { tutup(); return; }
         var a = e.target.closest('.nv-side a, .nv-crumb a, .nv-topbar a'); if (!a) return;
-        if (a.dataset.belum) { e.preventDefault(); toast('Halaman ' + a.dataset.belum + ' belum tersedia.'); return; }
+        if (a.dataset.belum) { e.preventDefault(); toast('Halaman ' + a.dataset.belum + ' tidak tersedia.'); return; }
         var h = a.getAttribute('href') || '';
         if (e.defaultPrevented || e.button || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || a.target === '_blank' || a.hasAttribute('download') || /^(#|mailto:|tel:|javascript:)/i.test(h)) return;
         var u; try { u = new URL(a.href, location.href); } catch (x) { return; }
@@ -2423,7 +2423,7 @@ if (!function_exists('nvSidebar')) {
                 ['Payroll', 'gaji.php', 'wallet', [], false],
             ]],
             ['AI Assistant', [
-                ['Chat Log', 'manajemen-ai-chat.php', 'chat', [], false],
+                ['Chat Log', 'manajemen-ai-chat.php', 'chat', [], true],
                 ['Simulator Chat', 'simulator-wa.php', 'chat', [], false],
                 ['Knowledge Base', 'manajemen-ai1.php', 'note', [], false],
                 ['Otomasi Pesan', 'manajemen-ai2.php', 'zap', [], false],
@@ -2866,7 +2866,7 @@ img, svg, video { max-width: 100%; }
                 <!-- Tarif -->
                 <div class="gj-panel gj-tarif" id="gj-p-tarif">
                     <div class="gj-card">
-                        <div class="gj-card-h"><h3>Tarif per Sesi <small></small></h3><small>Kosongkan kolom coach untuk memakai tarif standar</small></div>
+                        <div class="gj-card-h"><h3>Tarif per Sesi <small>· dalam Rupiah</small></h3><small>Kosongkan kolom coach untuk memakai tarif standar</small></div>
                         <table class="gj-table">
                             <thead><tr><th>Coach</th><th>Kids</th><th>Dewasa</th><th>Private</th></tr></thead>
                             <tbody id="gj-tarif-body"></tbody>
@@ -3181,7 +3181,7 @@ muat();
         var b = e.target.closest('.nv-burger'); if (b) { document.body.classList.toggle('nv-open'); return; }
         if (e.target.id === 'nv-scrim') { tutup(); return; }
         var a = e.target.closest('.nv-side a, .nv-crumb a, .nv-topbar a'); if (!a) return;
-        if (a.dataset.belum) { e.preventDefault(); toast('Halaman ' + a.dataset.belum + ' belum tersedia.'); return; }
+        if (a.dataset.belum) { e.preventDefault(); toast('Halaman ' + a.dataset.belum + ' tidak tersedia.'); return; }
         var h = a.getAttribute('href') || '';
         if (e.defaultPrevented || e.button || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || a.target === '_blank' || a.hasAttribute('download') || /^(#|mailto:|tel:|javascript:)/i.test(h)) return;
         var u; try { u = new URL(a.href, location.href); } catch (x) { return; }
@@ -4030,13 +4030,17 @@ else $ok[] = 'config/wa-config.php dibuat';
 $ikon = "            'award'    => '<circle cx=\"12\" cy=\"9\" r=\"6\"/><path d=\"M8.5 14.2L7 22l5-3 5 3-1.5-7.8\"/>',\n";
 $tambah = [   // [penanda, baris acuan (regex), baris baru]
     ['progres.php',     "/(\n[ ]*\['Kehadiran', 'kehadiran\.php', 'check', \[\], false\],)/",            "\n                ['Progres Murid', 'progres.php', 'award', [], false],"],
-    ['simulator-wa.php', "/(\n[ ]*\['Chat Log', 'manajemen-ai-chat\.php', 'chat', \[\], false\],)/",     "\n                ['Simulator Chat', 'simulator-wa.php', 'chat', [], false],"],
+    ['simulator-wa.php', "/(\n[ ]*\['Chat Log', 'manajemen-ai-chat\.php', 'chat', \[\], (?:true|false)\],)/",     "\n                ['Simulator Chat', 'simulator-wa.php', 'chat', [], false],"],
 ];
 $menu = 0;
 foreach (glob("$dir/*.php") as $f) {
     $s = file_get_contents($f);
     if ($f === __FILE__ || strpos($s, 'function nvMenu') === false) continue;
     $ubah = false;
+    // Chat Log ditutup di menu semua halaman (kolom ke-5 = true; ganti ke false untuk membukanya) + teks pemberitahuan
+    $c2 = str_replace("['Chat Log', 'manajemen-ai-chat.php', 'chat', [], true],", "['Chat Log', 'manajemen-ai-chat.php', 'chat', [], true],", $s);
+    $c2 = str_replace("' belum tersedia.'", "' tidak tersedia.'", $c2);
+    if ($c2 !== $s) { $s = $c2; $ubah = true; }
     if (strpos($s, "['Gaji', 'gaji.php'") !== false) { $s = str_replace("['Gaji', 'gaji.php'", "['Payroll', 'gaji.php'", $s); $ubah = true; }
     foreach ($tambah as [$tanda, $acuan, $baris]) {
         if (strpos($s, "'$tanda'") !== false) continue;

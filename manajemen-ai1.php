@@ -399,6 +399,7 @@ if (!function_exists('nvSidebar')) {
             ]],
             ['AI Assistant', [
                 ['Chat Log', 'manajemen-ai-chat.php', 'chat', [], true],
+                ['Simulator Chat', 'simulator-wa.php', 'chat', [], false],
                 ['Knowledge Base', 'manajemen-ai1.php', 'note', [], false],
                 ['Otomasi Pesan', 'manajemen-ai2.php', 'zap', [], false],
                 ['Analitik AI', 'manajemen-ai-analitik.php', 'trend', [], true],
@@ -1113,7 +1114,7 @@ muat();
         var b = e.target.closest('.nv-burger'); if (b) { document.body.classList.toggle('nv-open'); return; }
         if (e.target.id === 'nv-scrim') { tutup(); return; }
         var a = e.target.closest('.nv-side a, .nv-crumb a, .nv-topbar a'); if (!a) return;
-        if (a.dataset.belum) { e.preventDefault(); toast('Halaman ' + a.dataset.belum + ' belum tersedia.'); return; }
+        if (a.dataset.belum) { e.preventDefault(); toast('Halaman ' + a.dataset.belum + ' tidak tersedia.'); return; }
         var h = a.getAttribute('href') || '';
         if (e.defaultPrevented || e.button || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || a.target === '_blank' || a.hasAttribute('download') || /^(#|mailto:|tel:|javascript:)/i.test(h)) return;
         var u; try { u = new URL(a.href, location.href); } catch (x) { return; }

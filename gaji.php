@@ -238,7 +238,7 @@ if (!function_exists('nvSidebar')) {
                 ['Payroll', 'gaji.php', 'wallet', [], false],
             ]],
             ['AI Assistant', [
-                ['Chat Log', 'manajemen-ai-chat.php', 'chat', [], false],
+                ['Chat Log', 'manajemen-ai-chat.php', 'chat', [], true],
                 ['Simulator Chat', 'simulator-wa.php', 'chat', [], false],
                 ['Knowledge Base', 'manajemen-ai1.php', 'note', [], false],
                 ['Otomasi Pesan', 'manajemen-ai2.php', 'zap', [], false],
@@ -681,7 +681,7 @@ img, svg, video { max-width: 100%; }
                 <!-- Tarif -->
                 <div class="gj-panel gj-tarif" id="gj-p-tarif">
                     <div class="gj-card">
-                        <div class="gj-card-h"><h3>Tarif per Sesi <small></small></h3><small>Kosongkan kolom coach untuk memakai tarif standar</small></div>
+                        <div class="gj-card-h"><h3>Tarif per Sesi <small>· dalam Rupiah</small></h3><small>Kosongkan kolom coach untuk memakai tarif standar</small></div>
                         <table class="gj-table">
                             <thead><tr><th>Coach</th><th>Kids</th><th>Dewasa</th><th>Private</th></tr></thead>
                             <tbody id="gj-tarif-body"></tbody>
@@ -996,7 +996,7 @@ muat();
         var b = e.target.closest('.nv-burger'); if (b) { document.body.classList.toggle('nv-open'); return; }
         if (e.target.id === 'nv-scrim') { tutup(); return; }
         var a = e.target.closest('.nv-side a, .nv-crumb a, .nv-topbar a'); if (!a) return;
-        if (a.dataset.belum) { e.preventDefault(); toast('Halaman ' + a.dataset.belum + ' belum tersedia.'); return; }
+        if (a.dataset.belum) { e.preventDefault(); toast('Halaman ' + a.dataset.belum + ' tidak tersedia.'); return; }
         var h = a.getAttribute('href') || '';
         if (e.defaultPrevented || e.button || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || a.target === '_blank' || a.hasAttribute('download') || /^(#|mailto:|tel:|javascript:)/i.test(h)) return;
         var u; try { u = new URL(a.href, location.href); } catch (x) { return; }
