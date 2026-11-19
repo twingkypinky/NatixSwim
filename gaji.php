@@ -63,7 +63,7 @@ if ($aksi !== '') {
     }
 
     header('Content-Type: application/json; charset=utf-8');
-    if (in_array($aksi, ['hitung', 'adj', 'status', 'status_semua', 'tarif', 'pengaturan', 'kirim_wa'], true) && !$isPost) {
+    if (in_array($aksi, ['hitung', 'adj', 'status', 'status_semua', 'tarif', 'pengaturan', 'kirim_wa', 'wa_tes'], true) && !$isPost) {
         out(['ok' => false, 'pesan' => 'Metode tidak diizinkan.'], 405);
     }
 
@@ -125,6 +125,14 @@ if ($aksi !== '') {
 
             case 'kirim_wa': {
                 [$ok, $pesan] = gjKirimWa($pdo, (int)($in['id'] ?? 0));
+                out(['ok' => $ok, 'pesan' => $pesan], $ok ? 200 : 422);
+            }
+
+            case 'wa_status':
+                out(['ok' => true] + gjStatusGateway());
+
+            case 'wa_tes': {
+                [$ok, $pesan] = gjTesWa((string)($in['nomor'] ?? ''));
                 out(['ok' => $ok, 'pesan' => $pesan], $ok ? 200 : 422);
             }
 
@@ -222,14 +230,16 @@ if (!function_exists('nvSidebar')) {
                 ['Jadwal Kelas', 'jadwal-kelas.php', 'calendar', [], false],
                 ['Data Pelatih', 'data-pelatih-daftar.php', 'user', ['data-pelatih-detail.php'], false],
                 ['Kehadiran', 'kehadiran.php', 'check', [], false],
+                ['Progres Murid', 'progres.php', 'award', [], false],
             ]],
             ['Administrasi', [
                 ['Transaksi', 'administrasi.php', 'card', ['administrasi-detail.php'], false],
                 ['Laporan Keuangan', 'administrasi-laporan.php', 'chart', [], false],
-                ['Gaji', 'gaji.php', 'wallet', [], false],
+                ['Payroll', 'gaji.php', 'wallet', [], false],
             ]],
             ['AI Assistant', [
                 ['Chat Log', 'manajemen-ai-chat.php', 'chat', [], false],
+                ['Simulator Chat', 'simulator-wa.php', 'chat', [], false],
                 ['Knowledge Base', 'manajemen-ai1.php', 'note', [], false],
                 ['Otomasi Pesan', 'manajemen-ai2.php', 'zap', [], false],
                 ['Analitik AI', 'manajemen-ai-analitik.php', 'trend', [], true],
@@ -250,6 +260,7 @@ if (!function_exists('nvSidebar')) {
             'calendar' => '<rect x="3.5" y="5" width="17" height="16" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/>',
             'check'    => '<path d="M20 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V6a2 2 0 012-2h9"/><path d="M8.5 11.5l3 3L21 5"/>',
             'card'     => '<rect x="2.5" y="5" width="19" height="14" rx="2.5"/><path d="M2.5 10h19"/>',
+            'award'    => '<circle cx="12" cy="9" r="6"/><path d="M8.5 14.2L7 22l5-3 5 3-1.5-7.8"/>',
             'wallet'   => '<path d="M3 7a2 2 0 012-2h13v4"/><path d="M3 7v11a2 2 0 002 2h15a1 1 0 001-1v-3"/><path d="M21 9h-4a2 2 0 000 4h4z"/>',
             'chart'    => '<path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/>',
             'chat'     => '<path d="M21 11.5a8.5 8.5 0 01-12.6 7.4L3 20.5l1.6-5A8.5 8.5 0 1121 11.5z"/>',
@@ -423,6 +434,14 @@ if (!function_exists('nvSidebar')) {
         .gj-bubble { background: #e7f6ec; border-radius: 14px 14px 14px 4px; padding: 14px 16px; font-size: 13.5px; line-height: 1.55; color: #14321f; white-space: pre-wrap; margin-top: 14px; }
         .gj-cmd { display: inline-block; background: #f3f4f6; border-radius: 8px; padding: 2px 9px; font-weight: 600; color: #111827; font-size: 13px; }
         .gj-wa-full { grid-column: 1 / -1; }
+        .gj-gw { padding: 18px 22px; }
+        .gj-gw-row { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+        .gj-gw-dot { width: 12px; height: 12px; border-radius: 50%; background: #d1d5db; flex: 0 0 auto; box-shadow: 0 0 0 4px #f3f4f6; }
+        .gj-gw-dot.ok { background: #16a34a; box-shadow: 0 0 0 4px #dcfce7; } .gj-gw-dot.wait { background: #e8890c; box-shadow: 0 0 0 4px #ffedd5; } .gj-gw-dot.off { background: #dc2626; box-shadow: 0 0 0 4px #fee2e2; }
+        .gj-gw-txt { flex: 1 1 240px; min-width: 0; } .gj-gw-txt b { display: block; font-size: 15px; } .gj-gw-txt small { display: block; color: #6b7280; font-size: 13px; margin-top: 2px; line-height: 1.45; }
+        .gj-gw-txt a { color: #2563eb; text-decoration: none; font-weight: 600; }
+        .gj-gw-tes { display: flex; gap: 10px; margin-top: 14px; padding-top: 14px; border-top: 1px solid #f1f2f5; flex-wrap: wrap; }
+        .gj-gw-tes .gj-input { flex: 1 1 240px; min-width: 0; }
 
         /* Modal */
         .gj-overlay { position: fixed; inset: 0; background: rgba(17,24,39,.45); display: none; align-items: center; justify-content: center; padding: 20px; z-index: 1300; }
@@ -621,7 +640,7 @@ img, svg, video { max-width: 100%; }
 
                 <div class="gj-head">
                     <div>
-                        <h1 class="gj-title">Gaji Coach</h1>
+                        <h1 class="gj-title">Payroll Coach</h1>
                         <p class="gj-sub">Gaji dihitung otomatis dari jumlah sesi mengajar × tarif per sesi.</p>
                     </div>
                     <div class="gj-actions">
@@ -655,14 +674,14 @@ img, svg, video { max-width: 100%; }
                             <thead><tr><th>Coach</th><th>Sesi</th><th class="r">Gaji Sesi</th><th class="r">Bonus</th><th class="r">Potongan</th><th class="r">Total</th><th>Status</th><th>Slip WA</th></tr></thead>
                             <tbody id="gj-tbody"><tr><td colspan="8" class="gj-empty">Memuat…</td></tr></tbody>
                         </table>
-                        <div class="gj-foot-note">Sesi yang dihitung: jadwal bulan ini yang <b>sudah lewat</b> dan <b>tidak dibatalkan</b>. Klik baris untuk melihat rincian, mengubah bonus / potongan, menyetujui, dan membayar.</div>
+                        <div class="gj-foot-note">Klik baris untuk melihat rincian, mengubah bonus / potongan, menyetujui, dan membayar.</div>
                     </div>
                 </div>
 
                 <!-- Tarif -->
                 <div class="gj-panel gj-tarif" id="gj-p-tarif">
                     <div class="gj-card">
-                        <div class="gj-card-h"><h3>Tarif per Sesi <small>· dalam Rupiah</small></h3><small>Kosongkan kolom coach untuk memakai tarif standar</small></div>
+                        <div class="gj-card-h"><h3>Tarif per Sesi <small></small></h3><small>Kosongkan kolom coach untuk memakai tarif standar</small></div>
                         <table class="gj-table">
                             <thead><tr><th>Coach</th><th>Kids</th><th>Dewasa</th><th>Private</th></tr></thead>
                             <tbody id="gj-tarif-body"></tbody>
@@ -674,21 +693,8 @@ img, svg, video { max-width: 100%; }
                 <!-- WhatsApp -->
                 <div class="gj-panel" id="gj-p-wa">
                     <div class="gj-wa">
-                        <div class="gj-card gj-box">
-                            <h3>Pengiriman Slip Otomatis</h3>
-                            <p>Slip gaji berstatus <b>Dibayar</b> dikirim ke WhatsApp coach oleh <span class="gj-cmd">cron-gaji.php</span> (dijadwalkan harian). Pada tanggal yang dipilih, sistem juga menghitung draft gaji bulan sebelumnya.</p>
-                            <div class="gj-switch"><div><b>Kirim otomatis</b><small>Slip yang sudah dibayar langsung dikirim</small></div><label class="gj-tg"><input type="checkbox" id="gj-auto"><i></i></label></div>
-                            <div class="gj-switch" style="border-bottom:0"><div><b>Hitung draft setiap tanggal</b><small>Draft gaji bulan lalu dibuat pada tanggal ini</small></div><select class="gj-input" id="gj-hari" style="width:90px"></select></div>
-                            <p class="gj-info" id="gj-wa-note"></p>
-                        </div>
-                        <div class="gj-card gj-box">
-                            <h3>Cek Gaji lewat Chat</h3>
-                            <p>Coach cukup mengirim <span class="gj-cmd">Check Gaji Bulan Ini</span> dari nomor WhatsApp yang terdaftar di Data Pelatih. Balasan otomatis:</p>
-                            <div class="gj-bubble" id="gj-contoh"></div>
-                            <p class="gj-info">Sebelum disetujui, balasan ditandai <b>estimasi sementara</b>. Nomor yang bukan coach tidak mendapat data apa pun.</p>
-                        </div>
                         <div class="gj-card gj-wa-full">
-                            <div class="gj-card-h"><h3>Status Pengiriman <small id="gj-wa-periode"></small></h3><button class="gj-btn sm primary" id="gj-kirim-semua" type="button">Kirim Semua yang Belum Terkirim</button></div>
+                            <div class="gj-card-h"><h3>Status <small id="gj-wa-periode"></small></h3><button class="gj-btn sm primary" id="gj-kirim-semua" type="button">Kirim Semua yang Belum Terkirim</button></div>
                             <table class="gj-table">
                                 <thead><tr><th>Coach</th><th>No. WhatsApp</th><th>Status Gaji</th><th>Status Kirim</th><th>Keterangan</th><th></th></tr></thead>
                                 <tbody id="gj-wa-body"></tbody>
@@ -713,7 +719,7 @@ const JENIS = { kids: 'Kids', dewasa: 'Dewasa', private: 'Private' };
 const STATUS = { draft: 'Draft', disetujui: 'Disetujui', dibayar: 'Dibayar' };
 const WA = { belum: 'Belum dikirim', terkirim: 'Terkirim', gagal: 'Gagal' };
 const NOW = new Date();
-const S = { tahun: NOW.getFullYear(), bulan: NOW.getMonth() + 1, data: null, aktif: null, sibuk: false };
+const S = { tahun: NOW.getFullYear(), bulan: NOW.getMonth() + 1, data: null, aktif: null, sibuk: false, gw: null };
 
 function esc(t) { const d = document.createElement('div'); d.textContent = t == null ? '' : t; return d.innerHTML; }
 function rp(n) { return 'Rp ' + Math.round(+n || 0).toLocaleString('id-ID'); }
@@ -825,24 +831,20 @@ function contoh() {
 }
 
 function renderWa() {
-    const p = S.data.pengaturan;
-    $('gj-auto').checked = p.auto_wa;
-    $('gj-hari').innerHTML = Array.from({ length: 28 }, (_, i) => '<option value="' + (i + 1) + '"' + (p.hari_kirim === i + 1 ? ' selected' : '') + '>' + (i + 1) + '</option>').join('');
-    $('gj-wa-note').textContent = 'Jadwalkan cron-gaji.php satu kali sehari (mis. pukul 08.00). Tanpa cron, slip tetap bisa dikirim manual dari tabel di bawah.';
-    $('gj-contoh').textContent = contoh();
     $('gj-wa-periode').textContent = '· ' + S.data.label;
     const rows = S.data.rows;
     $('gj-wa-body').innerHTML = rows.length ? rows.map(g => {
         const bisa = g.status === 'dibayar';
+        const gwOk = S.gw && S.gw.state === 'open';
         const ket = g.wa_status === 'terkirim' ? 'Terkirim ' + esc((g.wa_waktu || '').slice(0, 16).replace('T', ' ')) : g.wa_status === 'gagal' ? esc(g.wa_error) : (bisa ? 'Menunggu dikirim' : 'Menunggu pembayaran gaji');
         return '<tr class="gj-row" style="cursor:default"><td class="gj-c0"><div class="gj-coach"><span class="gj-av">' + esc(inisial(g.nama)) + '</span><b>' + esc(g.nama) + '</b></div></td>'
             + '<td data-l="No. WhatsApp">' + (g.hp ? esc(g.hp) : '<span class="gj-neg">Belum diisi</span>') + '</td>'
             + '<td data-l="Status Gaji"><span class="gj-tag ' + g.status + '">' + STATUS[g.status] + '</span></td>'
             + '<td data-l="Status Kirim">' + (bisa ? '<span class="gj-tag ' + g.wa_status + '">' + WA[g.wa_status] + '</span>' : '<span class="gj-mut">–</span>') + '</td>'
             + '<td data-l="Keterangan" style="color:#6b7280;font-size:13px">' + ket + '</td>'
-            + '<td class="r"><button class="gj-btn sm" data-kirim="' + g.id + '" type="button"' + (bisa ? '' : ' disabled') + '>' + (g.wa_status === 'terkirim' ? 'Kirim Ulang' : 'Kirim') + '</button></td></tr>';
+            + '<td class="r"><button class="gj-btn sm" data-kirim="' + g.id + '" type="button"' + (bisa && gwOk ? '' : ' disabled') + (bisa && !gwOk ? ' title="WhatsApp belum terhubung"' : '') + '>' + (g.wa_status === 'terkirim' ? 'Kirim Ulang' : 'Kirim') + '</button></td></tr>';
     }).join('') : '<tr><td colspan="6" class="gj-empty">Belum ada data gaji pada periode ini.</td></tr>';
-    $('gj-kirim-semua').disabled = !rows.some(g => g.status === 'dibayar' && g.wa_status !== 'terkirim');
+    $('gj-kirim-semua').disabled = !(S.gw && S.gw.state === 'open') || !rows.some(g => g.status === 'dibayar' && g.wa_status !== 'terkirim');
 }
 
 async function kirim(id, tombol) {
@@ -862,11 +864,10 @@ $('gj-kirim-semua').addEventListener('click', async e => {
     toast(ok + ' slip terkirim' + (gagal ? ', ' + gagal + ' gagal (lihat keterangan)' : '') + '.', gagal > 0);
     muat();
 });
-$('gj-auto').addEventListener('change', simpanPengaturan);
-$('gj-hari').addEventListener('change', simpanPengaturan);
-async function simpanPengaturan() {
-    try { const j = await api('pengaturan', { auto_wa: $('gj-auto').checked, hari_kirim: +$('gj-hari').value }); toast(j.pesan); }
-    catch (e) { toast(e.message, true); muat(); }
+// ─── Status koneksi WhatsApp (tanpa tampilan; hanya menentukan tombol kirim aktif/tidak) ───
+async function gwCek() {
+    try { S.gw = await api('wa_status'); } catch (e) { S.gw = { state: 'mati', pesan: e.message }; }
+    if (S.data) renderWa();
 }
 
 // ─── Detail / modal ───
@@ -963,6 +964,7 @@ $('gj-setujui-semua').addEventListener('click', async e => {
 document.querySelectorAll('.gj-tab').forEach(t => t.addEventListener('click', () => {
     document.querySelectorAll('.gj-tab').forEach(x => x.classList.toggle('is-on', x === t));
     document.querySelectorAll('.gj-panel').forEach(p => p.classList.toggle('is-on', p.id === 'gj-p-' + t.dataset.tab));
+    if (t.dataset.tab === 'wa') gwCek(false);
 }));
 // Tautan dari notifikasi / halaman lain: gaji.php?tahun=2026&bulan=10
 (function () { const q = new URLSearchParams(location.search); const y = +q.get('tahun'), m = +q.get('bulan'); if (y > 2019 && m >= 1 && m <= 12) { S.tahun = y; S.bulan = m; } })();

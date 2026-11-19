@@ -184,11 +184,12 @@ if (!function_exists('nvSidebar')) {
                 ['Jadwal Kelas', 'jadwal-kelas.php', 'calendar', [], false],
                 ['Data Pelatih', 'data-pelatih-daftar.php', 'user', ['data-pelatih-detail.php'], false],
                 ['Kehadiran', 'kehadiran.php', 'check', [], false],
+                ['Progres Murid', 'progres.php', 'award', [], false],
             ]],
             ['Administrasi', [
                 ['Transaksi', 'administrasi.php', 'card', ['administrasi-detail.php'], false],
                 ['Laporan Keuangan', 'administrasi-laporan.php', 'chart', [], false],
-                ['Gaji', 'gaji.php', 'wallet', [], false],
+                ['Payroll', 'gaji.php', 'wallet', [], false],
             ]],
             ['AI Assistant', [
                 ['Chat Log', 'manajemen-ai-chat.php', 'chat', [], true],
@@ -212,6 +213,7 @@ if (!function_exists('nvSidebar')) {
             'calendar' => '<rect x="3.5" y="5" width="17" height="16" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/>',
             'check'    => '<path d="M20 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V6a2 2 0 012-2h9"/><path d="M8.5 11.5l3 3L21 5"/>',
             'card'     => '<rect x="2.5" y="5" width="19" height="14" rx="2.5"/><path d="M2.5 10h19"/>',
+            'award'    => '<circle cx="12" cy="9" r="6"/><path d="M8.5 14.2L7 22l5-3 5 3-1.5-7.8"/>',
             'wallet'   => '<path d="M3 7a2 2 0 012-2h13v4"/><path d="M3 7v11a2 2 0 002 2h15a1 1 0 001-1v-3"/><path d="M21 9h-4a2 2 0 000 4h4z"/>',
             'chart'    => '<path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/>',
             'chat'     => '<path d="M21 11.5a8.5 8.5 0 01-12.6 7.4L3 20.5l1.6-5A8.5 8.5 0 1121 11.5z"/>',

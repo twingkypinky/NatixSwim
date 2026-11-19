@@ -10,7 +10,7 @@
 // Konfigurasi lewat environment variable (semua opsional):
 //   PORT=3001  HOST=127.0.0.1  GATEWAY_TOKEN=<sama dengan GW_TOKEN di PHP>
 //   PHP_WEBHOOK_URL=http://localhost/NatixSwim/manajemen-ai-chat.php?aksi=webhook_baileys
-//   AUTH_DIR=./auth_info   MARK_READ=1   JEDA_MIN=1500  JEDA_MAX=3500
+//   AUTH_DIR=./auth_info   PAIR_NUMBER=62812xxxx (login pakai kode angka)    MARK_READ=1   JEDA_MIN=1500  JEDA_MAX=3500
 //
 // PERINGATAN: Baileys meniru WhatsApp Web dan melanggar ketentuan WhatsApp. Nomor bisa diblokir.
 // Pakai nomor khusus, jangan kirim massal, dan jangan membalas orang yang belum pernah menghubungi Anda.
@@ -33,6 +33,8 @@ const JEDA_MAX = parseInt(process.env.JEDA_MAX || '3500', 10);
 const MAX_MEDIA = 4 * 1024 * 1024;      // file masuk lebih besar dari ini tidak diteruskan (batas post_max_size PHP)
 const MAX_BODY = 12 * 1024 * 1024;
 
+const PAIR_NUMBER = (process.env.PAIR_NUMBER || '').replace(/\D+/g, '');   // mis. 6281234567890 -> login pakai kode, bukan QR
+let pairKode = ''; let pairMinta = false;
 const logger = pino({ level: process.env.LOG_LEVEL || 'warn' });
 const log = (...a) => console.log(new Date().toLocaleTimeString('id-ID'), ...a);
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -56,7 +58,7 @@ async function sambung() {
         let version;
         try { ({ version } = await fetchLatestBaileysVersion()); } catch { /* pakai versi bawaan library */ }
         status = 'connecting'; qrData = null;
-        const s = makeWASocket({ auth, version, logger, printQRInTerminal: false, markOnlineOnConnect: false, syncFullHistory: false, browser: ['Natix Swim', 'Chrome', '1.0'] });
+        const s = makeWASocket({ auth, version, logger, printQRInTerminal: false, markOnlineOnConnect: false, syncFullHistory: false, browser: ['Mac OS', 'Chrome', '14.4.1'] });
         sock = s;
 
         s.ev.on('creds.update', saveCreds);
@@ -64,9 +66,18 @@ async function sambung() {
         s.ev.on('connection.update', async (u) => {
             if (s !== sock) return;
             const { connection, lastDisconnect, qr } = u;
-            if (qr) { try { qrData = await QRCode.toDataURL(qr, { margin: 1, width: 280 }); status = 'qr'; log('QR siap dipindai (buka halaman Chat Log).'); } catch (e) { log('Gagal membuat QR:', e.message); } }
+            log('Status koneksi:', connection || '-', qr ? '(QR baru)' : '');
+            if (qr) {
+                try { qrData = await QRCode.toDataURL(qr, { margin: 4, width: 360, color: { dark: '#000000', light: '#ffffff' } }); status = 'qr'; log('QR siap dipindai buka http://127.0.0.1:3001/qr di browser (QR besar). QR di Terminal sering terbalik warna dan tidak terbaca HP.'); } catch (e) { log('Gagal membuat QR:', e.message); }
+                try { console.log(await QRCode.toString(qr, { type: 'terminal', small: true })); } catch { /* abaikan */ }
+                if (PAIR_NUMBER && !pairMinta && !s.authState.creds.registered) {   // login pakai kode angka (tanpa scan QR)
+                    pairMinta = true;
+                    try { pairKode = await s.requestPairingCode(PAIR_NUMBER); log('KODE TAUTAN:', pairKode, '-> di HP: Perangkat tertaut > Tautkan perangkat > "Tautkan dengan nomor telepon" > masukkan kode ini.'); }
+                    catch (e) { pairMinta = false; log('Gagal meminta kode tautan:', e.message); }
+                }
+            }
             if (connection === 'open') {
-                status = 'open'; qrData = null;
+                status = 'open'; qrData = null; pairKode = ''; pairMinta = false;
                 const id = s.user?.id || '';
                 akun = { nomor: id.split(':')[0].split('@')[0], nama: s.user?.name || '' };
                 log('Terhubung sebagai', akun.nomor, akun.nama);
@@ -74,7 +85,8 @@ async function sambung() {
             if (connection === 'close') {
                 status = 'closed'; qrData = null;
                 const kode = lastDisconnect?.error?.output?.statusCode;
-                log('Koneksi terputus, kode:', kode);
+                log('Koneksi terputus, kode:', kode, lastDisconnect?.error?.message || '');
+                pairMinta = false; pairKode = '';
                 if (keluarManual) return;
                 if (kode === DisconnectReason.loggedOut) {   // perangkat dihapus dari HP -> bersihkan sesi, minta QR baru
                     bersihkanSesi();
@@ -243,9 +255,15 @@ function bacaBody(req) {
 const server = http.createServer(async (req, res) => {
     const out = (kode, o) => { res.writeHead(kode, { 'content-type': 'application/json; charset=utf-8' }); res.end(JSON.stringify(o)); };
     try {
+        const p0 = (req.url || '').split('?')[0];
+        if (req.method === 'GET' && p0 === '/qr') {   // halaman QR besar untuk uji lokal (gateway hanya mendengarkan di 127.0.0.1)
+            res.writeHead(200, { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' });
+            const isi = status === 'qr' && qrData ? `<img src="${qrData}" width="360" height="360" alt="QR">` : status === 'open' ? '<h2>Sudah terhubung ✅ (' + akun.nomor + ')</h2>' : '<h2>Menunggu QR… (' + status + ')</h2>';
+            return res.end(`<!doctype html><meta charset="utf-8"><meta http-equiv="refresh" content="4"><title>QR WhatsApp</title><body style="margin:0;display:flex;min-height:100vh;align-items:center;justify-content:center;flex-direction:column;font-family:Arial;background:#fff;color:#111"><p>WhatsApp Business → Pengaturan → Perangkat tertaut → Tautkan perangkat</p>${isi}<p style="color:#666">Halaman ini menyegarkan sendiri tiap 4 detik.</p></body>`);
+        }
         if (!sama(req.headers['x-gateway-token'] || '', TOKEN)) return out(401, { ok: false, pesan: 'Token gateway salah.' });
         const path = (req.url || '').split('?')[0];
-        if (req.method === 'GET' && path === '/status') return out(200, { ok: true, state: status, qr: status === 'qr' ? qrData : null, nomor: akun.nomor, nama: akun.nama });
+        if (req.method === 'GET' && path === '/status') return out(200, { ok: true, state: status, qr: status === 'qr' ? qrData : null, kode: status === 'qr' ? pairKode : '', nomor: akun.nomor, nama: akun.nama });
         if (req.method === 'POST' && path === '/kirim') return out(200, { ok: true, ...(await kirim(await bacaBody(req))) });
         if (req.method === 'POST' && path === '/sambung') { if (status === 'closed') sambung(); return out(200, { ok: true }); }
         if (req.method === 'POST' && path === '/logout') {
