@@ -105,7 +105,6 @@ if (!function_exists('nvSidebar')) {
             ]],
             ['AI Assistant', [
                 ['Chat Log', 'manajemen-ai-chat.php', 'chat', [], true],
-                ['Simulator Chat', 'simulator-wa.php', 'chat', [], false],
                 ['Knowledge Base', 'manajemen-ai1.php', 'note', [], false],
                 ['Otomasi Pesan', 'manajemen-ai2.php', 'zap', [], false],
                 ['Analitik AI', 'manajemen-ai-analitik.php', 'trend', [], true],
