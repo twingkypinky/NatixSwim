@@ -577,6 +577,8 @@ function waProsesWebhook(PDO $pdo, array $p): int
             if (empty($st['id']) || empty($st['status'])) continue;
             $urut = ['sent' => 1, 'delivered' => 2, 'read' => 3, 'failed' => 4];
             if (!isset($urut[$st['status']])) continue;
+            if ($st['status'] === 'failed') error_log('[natix-wa] status failed: ' . json_encode($st['errors'] ?? $st, JSON_UNESCAPED_UNICODE));
+            if ($st['status'] === 'failed') error_log('[natix-wa] status failed: ' . json_encode($st['errors'] ?? $st, JSON_UNESCAPED_UNICODE));
             $pdo->prepare('UPDATE pesan SET status_kirim = :s WHERE wa_id = :w')->execute([':s' => $st['status'], ':w' => $st['id']]);
         }
     }
